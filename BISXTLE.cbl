@@ -1,6 +1,6 @@
       ******************************************************************
       *                                                                *
-      *   OBJECTIF  : Vérifie si l'année est bissextile                *
+      *   OBJECTIVE: Check if the year is a leap year                  *
       *                                                                *
       ******************************************************************       
 
@@ -13,37 +13,36 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
 
-      *    Année à vérifier
-       01  ANNEE PIC 9(04).
-      *    Indicateur pour savoir si l'année est bissextile
-       01  BISSEXTILE PIC X(03) VALUE 'NON'.
-      *    Pour stocker la réponse de l'utilisateur (Oui/Non)
-       01  ANS PIC X(01).
+      *    Year to check
+       01  YEAR PIC 9(04).
+      *    Indicator to know if the year is a leap year
+       01  LEAPYEAR PIC X(03) VALUE 'NO'.
+      *    To store the user's response (Yes/No)
+       01  ANSWER PIC X(01).
 
        PROCEDURE DIVISION.
 
-           PERFORM UNTIL ANS = 'N'
-               DISPLAY "Veuillez entrer une année : "
+           PERFORM UNTIL ANSWER = 'N'
+               DISPLAY "Please enter a year: "
                WITH NO ADVANCING
-               ACCEPT ANNEE
+               ACCEPT YEAR
 
-      *    Vérifie si l'année est bissextile
-               IF FUNCTION MOD(ANNEE, 4) = 0 AND 
-                  (FUNCTION MOD(ANNEE, 100) <> 0 OR 
-                   FUNCTION MOD(ANNEE, 400) = 0)
-                   MOVE 'OUI' TO BISSEXTILE
+      *    Check if the year is a leap year
+               IF FUNCTION MOD(YEAR, 4) = 0 AND 
+                  (FUNCTION MOD(YEAR, 100) <> 0 OR 
+                   FUNCTION MOD(YEAR, 400) = 0)
+                   MOVE 'YES' TO LEAPYEAR
                ELSE
-                   MOVE 'NON' TO BISSEXTILE
+                   MOVE 'NO' TO LEAPYEAR
                END-IF
 
-      *    Affiche le résultat
-           DISPLAY "L'année " ANNEE " est-elle bissextile? " BISSEXTILE
+      *    Display the result
+               DISPLAY "Is the year " YEAR " a leap year? " LEAPYEAR
 
-               DISPLAY "Voulez-vous vérifier une autre année? (Y/N): "
+               DISPLAY "Do you want to check another year? (Y/N): "
                WITH NO ADVANCING
-               ACCEPT ANS
-               MOVE FUNCTION UPPER-CASE(ANS) TO ANS
+               ACCEPT ANSWER
+               MOVE FUNCTION UPPER-CASE(ANSWER) TO ANSWER
            END-PERFORM
 
            STOP RUN.
-
